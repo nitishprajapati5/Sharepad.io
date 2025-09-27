@@ -1,8 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
-import { v4 as uuidv4 } from 'uuid';
 import axios from "axios"
-import { FileCode } from "../types/FileCode";
-const prisma = new PrismaClient()
 
 export async function getCodeId(){
    try{

@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     mutatation.mutate();
-  }, []);
+  }, [mutatation]);
 
   if (mutatation.isPending) {
     return (

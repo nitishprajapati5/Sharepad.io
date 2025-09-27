@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: Request) {
+export async function POST() {
   try {
     const id = uuidv4();
     
@@ -21,6 +21,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         message: "Error",
+        error: error,
       },
       { status: 500 }
     );
