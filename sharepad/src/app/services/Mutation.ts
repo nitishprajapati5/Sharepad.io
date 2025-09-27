@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 
 export function useSlug(){
     return useMutation({
-        mutationFn:() => getCodeId()
+        mutationFn:() => getCodeId(),
+    
     })
 }
