@@ -1,18 +1,36 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Loader2Icon } from "lucide-react";
-import { useEffect } from "react";
-import { useSlug } from "./services/Mutation";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
   const router = useRouter();
-  const mutatation = useSlug();
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  async function createSlug() {
+    try {
+      setError(false);
+      setLoading(true);
+
+      const res = await axios.post("/api/getCodeId");
+      console.log(res);
+      router.replace(`/${res.data.res.slug}`);
+    } catch (err) {
+      console.error(err);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    mutatation.mutate();
+    createSlug();
   }, []);
 
-  if (mutatation.isPending) {
+  if (loading) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center w-full">
         <Loader2Icon size={48} className="animate-spin" />
@@ -21,18 +39,12 @@ export default function Home() {
     );
   }
 
-  if (mutatation.isSuccess) {
-    // Redirect after success
-    router.push(`/${mutatation.data.res.slug}`);
-    //return null; // avoid double render
-  }
-
-  if (mutatation.isError) {
+  if (error) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center">
         <p className="text-red-600 mt-2">Failed to create file</p>
         <button
-          onClick={() => mutatation.mutate()}
+          onClick={createSlug}
           className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
         >
           Retry
@@ -43,4 +55,3 @@ export default function Home() {
 
   return null;
 }
-
