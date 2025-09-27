@@ -4,8 +4,6 @@ import ReactCodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
-import { css } from "@codemirror/lang-css";
-import { html } from "@codemirror/lang-html";
 import { creamyTheme } from "../_components/_ComponentConfiguration/creamyTheme";
 import { languageSelector } from "../_components/_ComponentConfiguration/languageConfiguration";
 import { Code2, Play, Share, UserPlus } from "lucide-react";
