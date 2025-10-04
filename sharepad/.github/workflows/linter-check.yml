@@ -1,0 +1,22 @@
+name : "Next JS Linter Check"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run:  npm install
+        working-directory: Sharepad.io/sharepad
+
+      - name: Run Next.js linter
+        run: npm run lint
+        working-directory: Sharepad.io/sharepad
+          
