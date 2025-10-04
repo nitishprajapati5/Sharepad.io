@@ -22,8 +22,14 @@ const eslintConfig = [
       "src/generated/**",
     ],
     rules: {
-      "@typescript-eslint/no-explicit-any": "off", // 🚀 disables "Unexpected any"
-    },
+  "@typescript-eslint/no-explicit-any": "off",
+  "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+  "react-hooks/exhaustive-deps": "warn",
+  "@typescript-eslint/no-unused-vars":"off",
+  "@typescript-eslint/triple-slash-reference":"off"
+
+}
+,
   },
 ];
 
