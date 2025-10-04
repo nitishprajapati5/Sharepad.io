@@ -14,23 +14,20 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/out/**",
+      "**/build/**",
       "next-env.d.ts",
       "src/generated/**",
     ],
     rules: {
-  "@typescript-eslint/no-explicit-any": "off",
-  "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
-  "react-hooks/exhaustive-deps": "warn",
-  "@typescript-eslint/no-unused-vars":"off",
-  "@typescript-eslint/triple-slash-reference":"off"
-
-}
-,
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "react-hooks/exhaustive-deps": "warn",
+    },
   },
 ];
+
 
 export default eslintConfig;
