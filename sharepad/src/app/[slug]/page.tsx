@@ -7,6 +7,9 @@ import { cpp } from "@codemirror/lang-cpp";
 import { creamyTheme } from "../_components/_ComponentConfiguration/creamyTheme";
 import { languageSelector } from "../_components/_ComponentConfiguration/languageConfiguration";
 import { Code2, Play, Share, UserPlus } from "lucide-react";
+import toast from "react-hot-toast";
+import axios from "axios";
+
 
 const languageMap: Record<string, () => any> = {
   javascript,
@@ -29,6 +32,33 @@ export default function Home() {
     const fn = languageMap[language];
     return fn ? fn() : javascript();
   }, [language]);
+
+  const handleShareClick = async () => {
+    try{
+
+      const promise = axios.post('/api/getCodeId');
+
+      toast.promise(
+       promise,
+        {
+          loading: 'Creating Shareable Link...',
+          success: (res) => {
+            const slug = res.data.res.slug;
+            const shareableLink = `${window.location.origin}/${slug}`;
+            navigator.clipboard.writeText(shareableLink);
+            return 'Link Copied to Clipboard!';
+          },
+          error: 'Error creating link. Please try again.',
+      }
+      )
+
+      await promise
+
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <div className="h-screen w-full p-4 flex flex-col">
@@ -53,7 +83,7 @@ export default function Home() {
           type="button"
           className="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold rounded-2xl px-5 py-2.5 shadow-md transition-transform transform hover:scale-105"
         >
-          <Share className="w-5 h-5" /> Share
+          <Share className="w-5 h-5" onClick={handleShareClick} /> Share
         </button>
 
         <button
