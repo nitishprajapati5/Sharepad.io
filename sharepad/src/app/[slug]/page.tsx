@@ -9,6 +9,7 @@ import { languageSelector } from "../_components/_ComponentConfiguration/languag
 import { Code2, Play, Share, UserPlus } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useParams } from "next/navigation";
 
 
 const languageMap: Record<string, () => any> = {
@@ -20,6 +21,10 @@ const languageMap: Record<string, () => any> = {
 export default function Home() {
   const [language, setLanguage] = useState("javascript");
   const [code, setCode] = useState(`console.log("Hello JavaScript")`);
+  const {slug} = useParams()
+
+
+  console.log("Slug:", slug)
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLang = e.target.value;
@@ -36,15 +41,20 @@ export default function Home() {
   const handleShareClick = async () => {
     try{
 
-      const promise = axios.post('/api/getCodeId');
+      const promise = axios.post('/api/shareCode',
+        {
+          slug: slug,
+        }
+      );
 
       toast.promise(
        promise,
         {
           loading: 'Creating Shareable Link...',
           success: (res) => {
-            const slug = res.data.res.slug;
-            const shareableLink = `${window.location.origin}/${slug}`;
+            console.log(res)
+            const slug = res.data.slug;
+            const shareableLink = `${window.location.origin}/share/${slug}`;
             navigator.clipboard.writeText(shareableLink);
             return 'Link Copied to Clipboard!';
           },

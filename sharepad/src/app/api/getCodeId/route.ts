@@ -8,8 +8,10 @@ export async function POST() {
     const id = uuidv4();
     await dbConnect();
 
-    const res = await FileCode.create({
-      slug: id,
+    console.log("Connected to DB",id);
+
+    const res = await FileCode.insertOne({
+      slug: uuidv4(),
       Code:""
     })
 
